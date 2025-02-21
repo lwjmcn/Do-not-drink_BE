@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EmailProvider {
     private final JavaMailSender javaMailSender;
-    private final String SUBJECT = "[DoNotDrink] 회원이 되신 걸 환영합니다🥤";
 
     public boolean sendVerificationEmail (String emailTo, String verificationCode) {
         try {
@@ -20,7 +19,7 @@ public class EmailProvider {
             String htmlContent = getVerificationContent(verificationCode);
 
             messageHelper.setTo(emailTo);
-            messageHelper.setSubject(SUBJECT);
+            messageHelper.setSubject("[DoNotDrink] 이메일 인증 코드는 "+verificationCode+" 입니다.");
             messageHelper.setText(htmlContent, true);
 
             javaMailSender.send(message);
