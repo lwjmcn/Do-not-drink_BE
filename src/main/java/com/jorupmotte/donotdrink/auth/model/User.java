@@ -41,6 +41,15 @@ public class User {
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;
 
+    public User(String accountId, String nickname, LoginType loginType, Theme theme){
+        this.accountId = accountId;
+        this.nickname = nickname;
+        this.loginType = loginType;
+        this.theme = theme;
+        this.role = RoleType.ROLE_USER;
+        this.isDeleted = false;
+    }
+
     public User(SignUpRequestDto dto, Theme theme){
         this.accountId = dto.getAccountId();
         this.nickname = dto.getNickname();
