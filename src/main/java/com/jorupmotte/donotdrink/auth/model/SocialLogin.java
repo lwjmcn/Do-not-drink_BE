@@ -2,8 +2,6 @@ package com.jorupmotte.donotdrink.auth.model;
 
 import com.jorupmotte.donotdrink.type.SocialLoginType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
