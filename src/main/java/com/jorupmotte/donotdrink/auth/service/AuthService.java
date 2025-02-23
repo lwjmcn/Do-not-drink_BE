@@ -2,6 +2,8 @@ package com.jorupmotte.donotdrink.auth.service;
 
 import com.jorupmotte.donotdrink.auth.dto.request.*;
 import com.jorupmotte.donotdrink.auth.dto.response.*;
+import com.jorupmotte.donotdrink.auth.model.SocialLogin;
+import com.jorupmotte.donotdrink.auth.repository.*;
 import com.jorupmotte.donotdrink.dto.response.ResponseDto;
 import com.jorupmotte.donotdrink.auth.model.LocalLogin;
 import com.jorupmotte.donotdrink.model.Theme;
@@ -9,10 +11,9 @@ import com.jorupmotte.donotdrink.auth.model.User;
 import com.jorupmotte.donotdrink.auth.model.Verification;
 import com.jorupmotte.donotdrink.provider.EmailProvider;
 import com.jorupmotte.donotdrink.provider.JwtProvider;
-import com.jorupmotte.donotdrink.auth.repository.LocalLoginRepository;
-import com.jorupmotte.donotdrink.auth.repository.ThemeRepository;
-import com.jorupmotte.donotdrink.auth.repository.UserRepository;
-import com.jorupmotte.donotdrink.auth.repository.VerificationRepository;
+import com.jorupmotte.donotdrink.type.LoginType;
+import com.jorupmotte.donotdrink.type.SocialLoginType;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,6 +34,7 @@ public class AuthService implements IAuthService{
     private final JwtProvider jwtProvider;
     private final EmailProvider emailProvider;
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // 직접 의존성 주입
+    private final SocialLoginRepository socialLoginRepository;
 
 
     @Override
@@ -171,5 +173,46 @@ public class AuthService implements IAuthService{
         }
 
         return SignInResponseDto.success(token);
+    }
+
+    @Override
+    public ResponseEntity<? super OAuthSignUpResponseDto> oAuthSignUp(HttpSession session, OAuthSignUpRequestDto requestDto) {
+        String tokenId = session.getAttribute("tokenId").toString();
+        if(tokenId == null)
+            return OAuthSignUpResponseDto.noSessionInfo();
+
+        String token = null;
+
+        try {
+            // create user
+            String accountId = requestDto.getAccountId();
+            String nickname = requestDto.getNickname();
+
+            if(userRepository.existsByAccountId(accountId))
+                return OAuthSignUpResponseDto.duplicateId();
+
+            Optional<Theme> defaultTheme = themeRepository.findById(1L);
+            if(defaultTheme.isEmpty())
+                return ResponseDto.databaseError();
+            User user = new User(accountId, nickname, LoginType.SOCIAL, defaultTheme.get());
+
+            // create social login
+            SocialLogin socialLogin = new SocialLogin(user, tokenId, SocialLoginType.KAKAO);
+            socialLoginRepository.save(socialLogin);
+
+            userRepository.save(user);
+            socialLoginRepository.save(socialLogin);
+
+            session.removeAttribute("tokenId");
+
+            // jwt 발급
+            token = jwtProvider.createJwt(accountId);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return OAuthSignUpResponseDto.success(token);
     }
 }

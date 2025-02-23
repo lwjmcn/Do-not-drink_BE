@@ -3,6 +3,7 @@ package com.jorupmotte.donotdrink.auth.controller;
 import com.jorupmotte.donotdrink.auth.dto.request.*;
 import com.jorupmotte.donotdrink.auth.dto.response.*;
 import com.jorupmotte.donotdrink.auth.service.AuthService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -51,5 +52,13 @@ public class AuthController {
             @RequestBody @Valid SignInRequestDto requestBody
     ){
         return authService.signIn(requestBody);
+    }
+
+    @PostMapping("/oauth-sign-up")
+    public ResponseEntity<? super OAuthSignUpResponseDto> oAuthSignUp(
+            HttpSession session,
+            @RequestBody @Valid OAuthSignUpRequestDto requestBody
+    ){
+        return authService.oAuthSignUp(session, requestBody);
     }
 }

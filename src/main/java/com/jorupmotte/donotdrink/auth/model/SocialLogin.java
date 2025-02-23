@@ -18,7 +18,7 @@ public class SocialLogin {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "token_id", nullable = false, length = 45)
+    @Column(name = "token_id", unique = true, nullable = false, length = 45)
     private String tokenId;
 
     @Enumerated(EnumType.STRING)
