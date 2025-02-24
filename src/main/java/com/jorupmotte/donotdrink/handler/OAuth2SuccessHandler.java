@@ -15,6 +15,9 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Component
@@ -29,7 +32,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException, UnsupportedEncodingException {
         CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
         String tokenId = customOAuth2User.getName();
 
@@ -43,7 +46,12 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             // sign up
             HttpSession session = request.getSession();
             session.setAttribute("tokenId", tokenId); // should be removed after sign up
-            getRedirectStrategy().sendRedirect(request,response,frontUrl+"/auth/oauth/signup-response/");
+
+            String nickname = customOAuth2User.getNickname();
+            String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
+            String accountId = customOAuth2User.getAccountId();
+
+            getRedirectStrategy().sendRedirect(request,response,frontUrl+"/auth/oauth/signup-response"+"?nickname="+encodedNickname+"&accountId="+accountId);
         }
     }
 }
