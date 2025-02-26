@@ -1,6 +1,5 @@
 package com.jorupmotte.donotdrink.auth.model;
 
-import com.jorupmotte.donotdrink.auth.dto.request.SignUpRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
