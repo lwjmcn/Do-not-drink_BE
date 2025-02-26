@@ -41,7 +41,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         if(socialLogin.isPresent()){
             // sign in
             String token = jwtProvider.createJwt(tokenId);
-            response.sendRedirect(frontUrl+"/auth/oauth/signin-response/"+token+"/3600");
+            response.sendRedirect(frontUrl+"/oauth/signin/"+token+"/3600");
         } else {
             // sign up
             HttpSession session = request.getSession();
@@ -51,7 +51,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
             String accountId = customOAuth2User.getAccountId();
 
-            getRedirectStrategy().sendRedirect(request,response,frontUrl+"/auth/oauth/signup-response"+"?nickname="+encodedNickname+"&accountId="+accountId);
+            getRedirectStrategy().sendRedirect(request,response,frontUrl+"/oauth/signup"+"?nickname="+encodedNickname+"&accountId="+accountId);
         }
     }
 }

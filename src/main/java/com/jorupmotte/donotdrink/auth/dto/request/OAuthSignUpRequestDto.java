@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OAuthSignUpRequestDto {
     @NotBlank
-    @Pattern(regexp = "^[a-zA-Z0-9]*$") // 영문 또는 숫자만 허용
+    @Pattern(regexp = "^[a-zA-Z0-9]{4,20}$") // 영문 또는 숫자 포함 가능, 4자에서 20자 사이
     private String accountId;
 
     @NotBlank

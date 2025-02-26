@@ -16,7 +16,7 @@ public class SignUpRequestDto {
     @NotBlank
     private String email;
 
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$") // 8자 이상, 영문, 숫자 조합
+    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d]{8,20}$") // 영문, 숫자 조합 8-20자
     @NotBlank
     private String password;
 
