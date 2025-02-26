@@ -117,6 +117,7 @@ public class AuthService implements IAuthService{
             String email = requestDto.getEmail();
             String password = requestDto.getPassword();
             String accountId = requestDto.getAccountId();
+            Long themeId = requestDto.getThemeId();
 
             if(userRepository.existsByAccountId(accountId))
                 return SignUpResponseDto.duplicateId();
@@ -124,11 +125,11 @@ public class AuthService implements IAuthService{
                 return SignUpResponseDto.duplicateEmail();
 
             // User 생성
-            // with nickname, accountId, login_type LOCAL, role USER, theme 기본
-            Optional<Theme> defaultTheme = themeRepository.findById(1L);
-            if(defaultTheme.isEmpty())
+            // with nickname, accountId, login_type LOCAL, role USER, theme_id
+            Optional<Theme> theme = themeRepository.findById(themeId);
+            if(theme.isEmpty())
                 return ResponseDto.databaseError();
-            User user = new User(requestDto, defaultTheme.get());
+            User user = new User(requestDto, theme.get());
             userRepository.save(user);
 
             // LocalLogin 생성
@@ -187,14 +188,15 @@ public class AuthService implements IAuthService{
             // create user
             String accountId = requestDto.getAccountId();
             String nickname = requestDto.getNickname();
+            Long themeId = requestDto.getThemeId();
 
             if(userRepository.existsByAccountId(accountId))
                 return OAuthSignUpResponseDto.duplicateId();
 
-            Optional<Theme> defaultTheme = themeRepository.findById(1L);
-            if(defaultTheme.isEmpty())
+            Optional<Theme> theme = themeRepository.findById(themeId);
+            if(theme.isEmpty())
                 return ResponseDto.databaseError();
-            User user = new User(accountId, nickname, LoginType.SOCIAL, defaultTheme.get());
+            User user = new User(accountId, nickname, LoginType.SOCIAL, theme.get());
 
             // create social login
             SocialLogin socialLogin = new SocialLogin(user, tokenId, SocialLoginType.KAKAO);

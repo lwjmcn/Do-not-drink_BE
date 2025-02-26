@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface ThemeRepository extends JpaRepository<Theme, Long> {
     // get default
     Optional<Theme> findById(Long id);
+    boolean existsById(Long id);
 }

@@ -20,4 +20,7 @@ public class OAuthSignUpRequestDto {
 
     @NotBlank
     private SocialLoginType socialLoginType;
+
+    @NotBlank
+    private Long themeId;
 }

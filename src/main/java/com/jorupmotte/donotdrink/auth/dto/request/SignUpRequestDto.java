@@ -25,4 +25,7 @@ public class SignUpRequestDto {
 
     @NotBlank
     private String accountId;
+
+    @NotBlank
+    private Long themeId; // 로직 수정 필요
 }
