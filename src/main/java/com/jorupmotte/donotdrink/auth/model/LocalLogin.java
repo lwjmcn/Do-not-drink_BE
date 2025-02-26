@@ -26,14 +26,14 @@ public class LocalLogin {
     @Column(name = "email", nullable = false, length = 45)
     private String email;
 
-    @Size(max = 45)
+    @Size(max = 60)
     @NotNull
     @Column(name = "password", nullable = false, length = 60)
     private String password;
 
-    public LocalLogin(SignUpRequestDto dto, User user){
+    public LocalLogin(User user, String email, String encodedPassword){
         this.user = user;
-        this.email = dto.getEmail();
-        this.password = dto.getPassword();
+        this.email = email;
+        this.password = encodedPassword;
     }
 }

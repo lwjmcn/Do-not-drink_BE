@@ -135,8 +135,7 @@ public class AuthService implements IAuthService{
             // LocalLogin 생성
             // with user_id, email, encodedPassword
             String encodedPassword = passwordEncoder.encode(password);
-            requestDto.setPassword(encodedPassword);
-            LocalLogin localLogin = new LocalLogin(requestDto, user);
+            LocalLogin localLogin = new LocalLogin(user, email, encodedPassword);
             localLoginRepository.save(localLogin);
 
         } catch (Exception e) {
