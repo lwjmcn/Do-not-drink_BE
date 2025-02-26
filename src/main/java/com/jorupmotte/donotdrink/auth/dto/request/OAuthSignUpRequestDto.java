@@ -2,6 +2,7 @@ package com.jorupmotte.donotdrink.auth.dto.request;
 
 import com.jorupmotte.donotdrink.type.SocialLoginType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,6 @@ public class OAuthSignUpRequestDto {
     @NotBlank
     private SocialLoginType socialLoginType;
 
-    @NotBlank
+    @NotNull
     private Long themeId;
 }
