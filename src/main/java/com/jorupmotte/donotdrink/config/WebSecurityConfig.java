@@ -1,12 +1,15 @@
 package com.jorupmotte.donotdrink.config;
 
 import com.jorupmotte.donotdrink.filter.JwtAuthenticationFilter;
+import com.jorupmotte.donotdrink.handler.CustomLogoutHandler;
+import com.jorupmotte.donotdrink.handler.CustomLogoutSuccessHandler;
 import com.jorupmotte.donotdrink.handler.OAuth2SuccessHandler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,6 +36,11 @@ public class WebSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final DefaultOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final CustomLogoutHandler customLogoutHandler;
+    private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
+
+    @Value("${FRONTEND_URL}")
+    private String frontUrl;
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
@@ -52,13 +60,17 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN") // role 검증
                         .anyRequest().authenticated() // 나머지 요청은 인증 필요
                 )
-
                 .oauth2Login(oauth2 -> oauth2
                         .loginProcessingUrl("/api/v1/auth/oauth2/*")
                         .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
                         .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
                         .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/api/v1/auth/logout")
+                        .addLogoutHandler(customLogoutHandler)
+                        .logoutSuccessHandler(customLogoutSuccessHandler)
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                     .authenticationEntryPoint(new FailedAuthenticationEntryPoint())
@@ -71,7 +83,8 @@ public class WebSecurityConfig {
     @Bean
     protected CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("*"); // TODO: 실제 서비스에서는 허용할 도메인만 허용
+        corsConfiguration.setAllowCredentials(true); // 쿠키/헤더 인증 허용
+        corsConfiguration.addAllowedOrigin(frontUrl); // TODO: 실제 서비스에서는 허용할 도메인만 허용
         corsConfiguration.addAllowedMethod("*");
         corsConfiguration.addAllowedHeader("*");
 

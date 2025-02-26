@@ -9,6 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.CacheManager;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,13 +30,13 @@ import java.util.List;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
-
+    private final CacheManager cacheManager;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try{
             String token = parseBearerToken(request);
-            if(token != null) {
+            if((token != null) && (checkTokenBlacklist(token) != null)) { // 로그아웃 된 토큰인지 체크
                 String userAccountId = jwtProvider.validateJwt(token);
                 if(userAccountId != null){
                     User user = userRepository.findByAccountId(userAccountId).orElse(null);
@@ -70,5 +71,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return authorization.substring(7);
         }
         return null;
+    }
+
+    private String checkTokenBlacklist(String token) {
+        return  cacheManager.getCache("expired").get(token, String.class);
     }
 }
