@@ -56,8 +56,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(request->request
                         .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**").permitAll() // auth
                         .requestMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**").permitAll() // swagger
-                        .requestMatchers("/api/v1/user/**").hasRole("USER") // role 검증
-                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN") // role 검증
+//                        .requestMatchers("/api/v1/user/**").hasRole("USER") // role 검증
+//                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN") // role 검증
                         .anyRequest().authenticated() // 나머지 요청은 인증 필요
                 )
                 .oauth2Login(oauth2 -> oauth2
