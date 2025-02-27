@@ -19,7 +19,7 @@ public class OAuthSignUpRequestDto {
     @NotBlank
     private String nickname;
 
-    @NotBlank
+    @NotNull
     private SocialLoginType socialLoginType;
 
     @NotNull

@@ -177,10 +177,10 @@ public class AuthService implements IAuthService{
 
     @Override
     public ResponseEntity<? super OAuthSignUpResponseDto> oAuthSignUp(HttpSession session, OAuthSignUpRequestDto requestDto) {
-        String tokenId = session.getAttribute("tokenId").toString();
-        if(tokenId == null)
+        if(session == null || session.getAttribute("tokenId") == null)
             return OAuthSignUpResponseDto.noSessionInfo();
 
+        String tokenId = session.getAttribute("tokenId").toString();
         String token = null;
 
         try {
@@ -188,6 +188,7 @@ public class AuthService implements IAuthService{
             String accountId = requestDto.getAccountId();
             String nickname = requestDto.getNickname();
             Long themeId = requestDto.getThemeId();
+            SocialLoginType socialLoginType = requestDto.getSocialLoginType();
 
             if(userRepository.existsByAccountId(accountId))
                 return OAuthSignUpResponseDto.duplicateId();
@@ -198,8 +199,7 @@ public class AuthService implements IAuthService{
             User user = new User(accountId, nickname, LoginType.SOCIAL, theme.get());
 
             // create social login
-            SocialLogin socialLogin = new SocialLogin(user, tokenId, SocialLoginType.KAKAO);
-            socialLoginRepository.save(socialLogin);
+            SocialLogin socialLogin = new SocialLogin(user, tokenId, socialLoginType);
 
             userRepository.save(user);
             socialLoginRepository.save(socialLogin);
