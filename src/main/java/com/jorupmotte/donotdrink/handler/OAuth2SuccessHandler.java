@@ -51,7 +51,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
             String accountId = customOAuth2User.getAccountId();
 
-            getRedirectStrategy().sendRedirect(request,response,frontUrl+"/auth/oauth/signup"+"?nickname="+encodedNickname+"&accountId="+accountId);
+            getRedirectStrategy().sendRedirect(request,response,frontUrl+"/auth/oauth/signup/profile"+"?nickname="+encodedNickname+"&accountId="+accountId);
         }
     }
 }
