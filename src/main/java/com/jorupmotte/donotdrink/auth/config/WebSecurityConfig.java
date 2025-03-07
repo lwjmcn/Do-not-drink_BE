@@ -54,7 +54,7 @@ public class WebSecurityConfig {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션 사용 안함
                 )
                 .authorizeHttpRequests(request->request
-                        .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**").permitAll() // auth
+                        .requestMatchers("/", "/api/v1/auth/**", "/oauth2/**", "/api/v1/themes/").permitAll() // auth
                         .requestMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**").permitAll() // swagger
 //                        .requestMatchers("/api/v1/user/**").hasRole("USER") // role 검증
 //                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN") // role 검증

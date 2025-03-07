@@ -1,7 +1,7 @@
 package com.jorupmotte.donotdrink.auth.model;
 
 import com.jorupmotte.donotdrink.auth.dto.request.SignUpRequestDto;
-import com.jorupmotte.donotdrink.model.Theme;
+import com.jorupmotte.donotdrink.theme.model.Theme;
 import com.jorupmotte.donotdrink.type.LoginType;
 import com.jorupmotte.donotdrink.type.RoleType;
 import jakarta.persistence.*;

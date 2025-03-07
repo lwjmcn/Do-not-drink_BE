@@ -1,4 +1,4 @@
-package com.jorupmotte.donotdrink.model;
+package com.jorupmotte.donotdrink.theme.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
