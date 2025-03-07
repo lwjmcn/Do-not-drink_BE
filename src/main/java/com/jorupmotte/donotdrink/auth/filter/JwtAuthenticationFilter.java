@@ -1,9 +1,9 @@
 package com.jorupmotte.donotdrink.auth.filter;
 
 import com.jorupmotte.donotdrink.type.RoleType;
-import com.jorupmotte.donotdrink.auth.model.User;
+import com.jorupmotte.donotdrink.user.model.User;
 import com.jorupmotte.donotdrink.provider.JwtProvider;
-import com.jorupmotte.donotdrink.auth.repository.UserRepository;
+import com.jorupmotte.donotdrink.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try{
             String token = parseBearerToken(request);
-            if((token != null) && (checkTokenBlacklist(token) != null)) { // 로그아웃 된 토큰인지 체크
+            if((token != null) && (checkTokenBlacklist(token) == null)) { // 로그아웃 된 토큰인지 체크
                 String userAccountId = jwtProvider.validateJwt(token);
                 if(userAccountId != null){
                     User user = userRepository.findByAccountId(userAccountId).orElse(null);
@@ -74,6 +74,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String checkTokenBlacklist(String token) {
-        return  cacheManager.getCache("expired").get(token, String.class);
+        return cacheManager.getCache("expired").get(token, String.class);
     }
 }
