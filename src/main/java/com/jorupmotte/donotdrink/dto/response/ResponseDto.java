@@ -29,4 +29,9 @@ public class ResponseDto {
     ResponseDto responseBody = new ResponseDto(ResponseCode.VALIDATION_FAIL, ResponseMessage.VALIDATION_FAIL);
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
   }
+
+  public static ResponseEntity<ResponseDto> authorizationFail() {
+    ResponseDto responseBody = new ResponseDto(ResponseCode.AUTHORIZATION_FAIL, ResponseMessage.AUTHORIZATION_FAIL);
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
+  }
 }
