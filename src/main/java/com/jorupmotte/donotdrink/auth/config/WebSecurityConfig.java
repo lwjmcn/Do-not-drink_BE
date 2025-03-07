@@ -68,7 +68,7 @@ public class WebSecurityConfig {
                         .successHandler(oAuth2SuccessHandler)
                 )
                 .logout(logout -> logout
-                        .logoutUrl("/api/v1/user/logout")
+                        .logoutUrl("/api/v1/users/me/logout")
                         .addLogoutHandler(customLogoutHandler)
                         .logoutSuccessHandler(customLogoutSuccessHandler)
                 )
