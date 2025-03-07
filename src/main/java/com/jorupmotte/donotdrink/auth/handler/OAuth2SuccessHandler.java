@@ -1,4 +1,4 @@
-package com.jorupmotte.donotdrink.handler;
+package com.jorupmotte.donotdrink.auth.handler;
 
 import com.jorupmotte.donotdrink.auth.model.CustomOAuth2User;
 import com.jorupmotte.donotdrink.auth.model.SocialLogin;

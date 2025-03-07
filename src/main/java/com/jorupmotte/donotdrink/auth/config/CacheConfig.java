@@ -1,4 +1,4 @@
-package com.jorupmotte.donotdrink.config;
+package com.jorupmotte.donotdrink.auth.config;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.annotation.EnableCaching;

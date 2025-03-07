@@ -1,9 +1,9 @@
-package com.jorupmotte.donotdrink.config;
+package com.jorupmotte.donotdrink.auth.config;
 
-import com.jorupmotte.donotdrink.filter.JwtAuthenticationFilter;
-import com.jorupmotte.donotdrink.handler.CustomLogoutHandler;
-import com.jorupmotte.donotdrink.handler.CustomLogoutSuccessHandler;
-import com.jorupmotte.donotdrink.handler.OAuth2SuccessHandler;
+import com.jorupmotte.donotdrink.auth.filter.JwtAuthenticationFilter;
+import com.jorupmotte.donotdrink.auth.handler.CustomLogoutHandler;
+import com.jorupmotte.donotdrink.auth.handler.CustomLogoutSuccessHandler;
+import com.jorupmotte.donotdrink.auth.handler.OAuth2SuccessHandler;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

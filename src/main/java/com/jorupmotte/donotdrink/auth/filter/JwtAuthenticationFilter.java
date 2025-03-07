@@ -1,4 +1,4 @@
-package com.jorupmotte.donotdrink.filter;
+package com.jorupmotte.donotdrink.auth.filter;
 
 import com.jorupmotte.donotdrink.type.RoleType;
 import com.jorupmotte.donotdrink.auth.model.User;
