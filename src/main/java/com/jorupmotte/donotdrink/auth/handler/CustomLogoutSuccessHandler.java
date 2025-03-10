@@ -1,7 +1,7 @@
 package com.jorupmotte.donotdrink.auth.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jorupmotte.donotdrink.dto.response.ResponseDto;
+import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

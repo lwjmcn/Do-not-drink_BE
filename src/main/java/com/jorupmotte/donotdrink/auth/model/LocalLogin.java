@@ -1,5 +1,6 @@
 package com.jorupmotte.donotdrink.auth.model;
 
+import com.jorupmotte.donotdrink.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

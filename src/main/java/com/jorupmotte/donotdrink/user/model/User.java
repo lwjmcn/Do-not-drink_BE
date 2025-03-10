@@ -1,9 +1,9 @@
-package com.jorupmotte.donotdrink.auth.model;
+package com.jorupmotte.donotdrink.user.model;
 
 import com.jorupmotte.donotdrink.auth.dto.request.SignUpRequestDto;
 import com.jorupmotte.donotdrink.theme.model.Theme;
-import com.jorupmotte.donotdrink.type.LoginType;
-import com.jorupmotte.donotdrink.type.RoleType;
+import com.jorupmotte.donotdrink.common.type.LoginType;
+import com.jorupmotte.donotdrink.common.type.RoleType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

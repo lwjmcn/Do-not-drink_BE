@@ -1,6 +1,6 @@
 package com.jorupmotte.donotdrink.theme.service;
 
-import com.jorupmotte.donotdrink.dto.response.ResponseDto;
+import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
 import com.jorupmotte.donotdrink.theme.dto.response.ThemeFindAllResponseDto;
 import com.jorupmotte.donotdrink.theme.model.Theme;
 import com.jorupmotte.donotdrink.theme.repository.ThemeRepository;

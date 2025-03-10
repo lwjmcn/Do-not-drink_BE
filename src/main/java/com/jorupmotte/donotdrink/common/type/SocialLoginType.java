@@ -1,4 +1,4 @@
-package com.jorupmotte.donotdrink.type;
+package com.jorupmotte.donotdrink.common.type;
 
 public enum SocialLoginType {
     google, kakao

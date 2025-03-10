@@ -1,4 +1,4 @@
-package com.jorupmotte.donotdrink.provider;
+package com.jorupmotte.donotdrink.auth.provider;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;

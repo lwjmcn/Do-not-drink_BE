@@ -3,7 +3,7 @@ package com.jorupmotte.donotdrink.auth.handler;
 import com.jorupmotte.donotdrink.auth.model.CustomOAuth2User;
 import com.jorupmotte.donotdrink.auth.model.SocialLogin;
 import com.jorupmotte.donotdrink.auth.repository.SocialLoginRepository;
-import com.jorupmotte.donotdrink.provider.JwtProvider;
+import com.jorupmotte.donotdrink.auth.provider.JwtProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,8 +1,8 @@
 package com.jorupmotte.donotdrink.auth.filter;
 
-import com.jorupmotte.donotdrink.type.RoleType;
+import com.jorupmotte.donotdrink.common.type.RoleType;
 import com.jorupmotte.donotdrink.user.model.User;
-import com.jorupmotte.donotdrink.provider.JwtProvider;
+import com.jorupmotte.donotdrink.auth.provider.JwtProvider;
 import com.jorupmotte.donotdrink.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

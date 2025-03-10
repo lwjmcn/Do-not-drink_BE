@@ -1,6 +1,7 @@
 package com.jorupmotte.donotdrink.auth.model;
 
-import com.jorupmotte.donotdrink.type.SocialLoginType;
+import com.jorupmotte.donotdrink.common.type.SocialLoginType;
+import com.jorupmotte.donotdrink.user.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

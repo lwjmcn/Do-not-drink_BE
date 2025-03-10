@@ -1,10 +1,10 @@
-package com.jorupmotte.donotdrink.dto.response;
+package com.jorupmotte.donotdrink.common.dto.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.jorupmotte.donotdrink.type.ResponseCode;
-import com.jorupmotte.donotdrink.type.ResponseMessage;
+import com.jorupmotte.donotdrink.common.type.ResponseCode;
+import com.jorupmotte.donotdrink.common.type.ResponseMessage;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

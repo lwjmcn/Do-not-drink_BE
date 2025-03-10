@@ -1,6 +1,6 @@
 package com.jorupmotte.donotdrink.theme.dto.response;
 
-import com.jorupmotte.donotdrink.dto.response.ResponseDto;
+import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
 import com.jorupmotte.donotdrink.theme.model.Theme;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

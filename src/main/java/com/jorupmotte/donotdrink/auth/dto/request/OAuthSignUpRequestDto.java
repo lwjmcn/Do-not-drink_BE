@@ -1,6 +1,6 @@
 package com.jorupmotte.donotdrink.auth.dto.request;
 
-import com.jorupmotte.donotdrink.type.SocialLoginType;
+import com.jorupmotte.donotdrink.common.type.SocialLoginType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

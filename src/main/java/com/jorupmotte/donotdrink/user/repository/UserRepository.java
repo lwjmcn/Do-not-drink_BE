@@ -1,6 +1,6 @@
-package com.jorupmotte.donotdrink.auth.repository;
+package com.jorupmotte.donotdrink.user.repository;
 
-import com.jorupmotte.donotdrink.auth.model.User;
+import com.jorupmotte.donotdrink.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
