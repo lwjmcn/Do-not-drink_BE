@@ -23,6 +23,11 @@ public class BudgetService implements IBudgetService {
     private final BudgetRepository budgetRepository;
     private final TransactionRepository transactionRepository;
 
+    public Optional<Budget> getCurrentBudget(Long userId) {
+        LocalDateTime now = LocalDateTime.now();
+        return budgetRepository.findByUser_IdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(userId, now, now);
+    }
+
     @Override
     public ResponseEntity<? super BudgetRemainingResponseDto> getRemainingBudget() {
         User userMe = userService.getUserFromSecurityContext();
@@ -31,8 +36,7 @@ public class BudgetService implements IBudgetService {
         }
 
         // 현재 budget 조회
-        LocalDateTime now = LocalDateTime.now();
-        Optional<Budget> budgetOptional = budgetRepository.findByUser_IdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(userMe.getId(), now, now);
+        Optional<Budget> budgetOptional = getCurrentBudget(userMe.getId());
         if(budgetOptional.isEmpty()){
             return BudgetRemainingResponseDto.noBudget();
         }
@@ -57,13 +61,12 @@ public class BudgetService implements IBudgetService {
         }
 
         // 현재 budget 조회
-        LocalDateTime now = LocalDateTime.now();
-        Optional<Budget> budgetOptional = budgetRepository.findByUser_IdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(userMe.getId(), now, now);
+        Optional<Budget> budgetOptional = getCurrentBudget(userMe.getId());
         if(budgetOptional.isPresent()){
             return BudgetSetResponseDto.alreadyDefined();
         }
 
-
+        LocalDateTime now = LocalDateTime.now();
         Budget budget = Budget.builder()
                 .user(userMe)
                 .amount(requestDto.getBudget())
