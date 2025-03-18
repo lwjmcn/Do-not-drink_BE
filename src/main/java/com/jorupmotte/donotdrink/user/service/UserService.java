@@ -30,8 +30,6 @@ public class UserService implements IUserService{
             }
             String userAccountId = authentication.getPrincipal().toString();
 
-        // 유저 정보 가져오기
-        Optional<User> userOptional = userRepository.findByAccountId(userAccountId);
             // db 조회
             Optional<User> userOptional = userRepository.findByAccountId(userAccountId);
             if (userOptional.isEmpty()) {
@@ -44,12 +42,38 @@ public class UserService implements IUserService{
 
         return user;
     }
+
+    @Override
+    public ResponseEntity<? super UserMeResponseDto> getCurrentUser() {
+        User userMe = getUserFromSecurityContext();
+        if(userMe == null) {
+            return ResponseDto.authorizationFail();
+        }
+
+        return UserMeResponseDto.success(userMe);
+    }
+
+    @Override
+    public ResponseEntity<? super UserFriendResponseDto> getFriend(String friendAccountId) {
+        // 본인 정보
+        User userMe = getUserFromSecurityContext();
+        if(userMe == null) {
+            return ResponseDto.authorizationFail();
+        }
+
+        // 친구 정보
+        Optional<User> userOptional = userRepository.findByAccountId(friendAccountId);
         if(userOptional.isEmpty()){
             return ResponseDto.databaseError();
         }
+        User friend = userOptional.get();
 
-        User user = userOptional.get();
+//        // TODO: 친구인지 확인하는 로직 추가
+//        if(!friend){
+//            return UserFriendResponseDto.notFriend();
+//        }
 
-        return UserMeResponseDto.success(user);
+        return UserFriendResponseDto.success(friend);
+
     }
 }
