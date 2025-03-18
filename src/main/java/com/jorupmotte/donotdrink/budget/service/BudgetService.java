@@ -33,7 +33,7 @@ public class BudgetService implements IBudgetService {
         // 현재 budget 조회
         LocalDateTime now = LocalDateTime.now();
         Optional<Budget> budgetOptional = budgetRepository.findByUser_IdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(userMe.getId(), now, now);
-        if(budgetOptional.isPresent()){
+        if(budgetOptional.isEmpty()){
             return BudgetRemainingResponseDto.noBudget();
         }
         Long budget = budgetOptional.get().getAmount();
