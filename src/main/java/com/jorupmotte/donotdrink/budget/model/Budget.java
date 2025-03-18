@@ -2,6 +2,7 @@ package com.jorupmotte.donotdrink.budget.model;
 
 import com.jorupmotte.donotdrink.user.model.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "budget")
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Budget {
     @Id
@@ -30,12 +33,4 @@ public class Budget {
 
     @Column(name = "amount", nullable = false)
     private Long amount;
-
-    @Builder
-    public Budget (User user, LocalDateTime startDate, LocalDateTime endDate, Long amount) {
-        this.user = user;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.amount = amount;
-    }
 }

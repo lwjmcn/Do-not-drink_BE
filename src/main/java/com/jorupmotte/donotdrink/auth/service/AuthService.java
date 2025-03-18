@@ -6,6 +6,7 @@ import com.jorupmotte.donotdrink.auth.model.SocialLogin;
 import com.jorupmotte.donotdrink.auth.repository.*;
 import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
 import com.jorupmotte.donotdrink.auth.model.LocalLogin;
+import com.jorupmotte.donotdrink.common.type.RoleType;
 import com.jorupmotte.donotdrink.theme.model.Theme;
 import com.jorupmotte.donotdrink.user.model.User;
 import com.jorupmotte.donotdrink.auth.model.Verification;
@@ -131,13 +132,24 @@ public class AuthService implements IAuthService{
             Optional<Theme> theme = themeRepository.findById(themeId);
             if(theme.isEmpty())
                 return ResponseDto.databaseError();
-            User user = new User(requestDto, theme.get());
+
+            User user = User.builder()
+                    .accountId(accountId)
+                    .nickname(accountId)
+                    .loginType(LoginType.LOCAL)
+                    .role(RoleType.ROLE_USER)
+                    .theme(theme.get())
+                    .build();
             userRepository.save(user);
 
             // LocalLogin 생성
             // with user_id, email, encodedPassword
             String encodedPassword = passwordEncoder.encode(password);
-            LocalLogin localLogin = new LocalLogin(user, email, encodedPassword);
+            LocalLogin localLogin = LocalLogin.builder()
+                    .user(user)
+                    .email(email)
+                    .password(encodedPassword)
+                    .build();
             localLoginRepository.save(localLogin);
 
         } catch (Exception e) {
@@ -198,10 +210,22 @@ public class AuthService implements IAuthService{
             Optional<Theme> theme = themeRepository.findById(themeId);
             if(theme.isEmpty())
                 return ResponseDto.databaseError();
-            User user = new User(accountId, nickname, LoginType.SOCIAL, theme.get());
+
+
+            User user = User.builder()
+                    .accountId(accountId)
+                    .nickname(nickname)
+                    .loginType(LoginType.SOCIAL)
+                    .role(RoleType.ROLE_USER)
+                    .theme(theme.get())
+                    .build();
 
             // create social login
-            SocialLogin socialLogin = new SocialLogin(user, tokenId, socialLoginType);
+            SocialLogin socialLogin = SocialLogin.builder()
+                    .user(user)
+                    .tokenId(tokenId)
+                    .provider(socialLoginType)
+                    .build();
 
             userRepository.save(user);
             socialLoginRepository.save(socialLogin);

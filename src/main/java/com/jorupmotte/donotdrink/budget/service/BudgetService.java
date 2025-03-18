@@ -63,12 +63,14 @@ public class BudgetService implements IBudgetService {
             return BudgetSetResponseDto.alreadyDefined();
         }
 
-        budgetRepository.save(Budget.builder()
+
+        Budget budget = Budget.builder()
                 .user(userMe)
                 .amount(requestDto.getBudget())
                 .startDate(now)
                 .endDate(now)
-                .build());
+                .build();
+        budgetRepository.save(budget);
 
         return BudgetSetResponseDto.success();
     }

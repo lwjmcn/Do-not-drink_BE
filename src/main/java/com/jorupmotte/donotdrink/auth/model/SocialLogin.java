@@ -3,12 +3,16 @@ package com.jorupmotte.donotdrink.auth.model;
 import com.jorupmotte.donotdrink.common.type.SocialLoginType;
 import com.jorupmotte.donotdrink.user.model.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "social_login")
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class SocialLogin {
     @Id
@@ -25,11 +29,4 @@ public class SocialLogin {
     @Enumerated(EnumType.STRING)
     @Column(name = "provider", nullable = false)
     private SocialLoginType provider;
-
-    public SocialLogin(User user, String tokenId, SocialLoginType provider) {
-        this.user = user;
-        this.tokenId = tokenId;
-        this.provider = provider;
-    }
-
 }

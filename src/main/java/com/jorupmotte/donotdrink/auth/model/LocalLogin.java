@@ -4,12 +4,16 @@ import com.jorupmotte.donotdrink.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "local_login")
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class LocalLogin {
     @Id
@@ -30,10 +34,4 @@ public class LocalLogin {
     @NotNull
     @Column(name = "password", nullable = false, length = 60)
     private String password;
-
-    public LocalLogin(User user, String email, String encodedPassword){
-        this.user = user;
-        this.email = email;
-        this.password = encodedPassword;
-    }
 }
