@@ -1,0 +1,41 @@
+package com.jorupmotte.donotdrink.budget.model;
+
+import com.jorupmotte.donotdrink.user.model.User;
+import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "budget")
+@Getter
+@NoArgsConstructor
+public class Budget {
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(name = "start_date", nullable = false)
+    private LocalDateTime startDate;
+
+    @Column(name = "end_date", nullable = false)
+    private LocalDateTime endDate;
+
+    @Column(name = "amount", nullable = false)
+    private Long amount;
+
+    @Builder
+    public Budget (User user, LocalDateTime startDate, LocalDateTime endDate, Long amount) {
+        this.user = user;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.amount = amount;
+    }
+}
