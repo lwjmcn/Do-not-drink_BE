@@ -1,6 +1,6 @@
 package com.jorupmotte.donotdrink.user.controller;
 
-import com.jorupmotte.donotdrink.user.dto.response.UserFriendResponseDto;
+//import com.jorupmotte.donotdrink.user.dto.response.UserFriendResponseDto;
 import com.jorupmotte.donotdrink.user.dto.response.UserMeResponseDto;
 import com.jorupmotte.donotdrink.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +21,9 @@ public class UserController {
         return userService.getCurrentUser();
     }
 
-    @GetMapping("/{accountId}")
-    public ResponseEntity<? super UserFriendResponseDto> getFriend(@PathVariable("accountId") String accountId) {
-        return userService.getFriend(accountId);
-    }
+//    @GetMapping("/{accountId}")
+//    public ResponseEntity<? super UserFriendResponseDto> getFriend(@PathVariable("accountId") String accountId) {
+//        return userService.getFriend(accountId);
+//    }
 
 }
