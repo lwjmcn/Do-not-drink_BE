@@ -87,11 +87,14 @@ public class BudgetService implements IBudgetService {
         }
 
         LocalDateTime now = LocalDateTime.now();
+        LocalDateTime lastDayOfThisMonth = now.withDayOfMonth(now.toLocalDate().lengthOfMonth());
+        System.out.println("lastDayOfThisMonth = " + lastDayOfThisMonth);
+
         Budget budget = Budget.builder()
                 .user(userMe)
                 .amount(requestDto.getBudget())
                 .startDate(now)
-                .endDate(now)
+                .endDate(lastDayOfThisMonth)
                 .build();
         budgetRepository.save(budget);
 
