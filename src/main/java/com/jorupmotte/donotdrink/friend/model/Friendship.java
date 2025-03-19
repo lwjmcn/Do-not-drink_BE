@@ -3,12 +3,16 @@ package com.jorupmotte.donotdrink.friend.model;
 import com.jorupmotte.donotdrink.user.model.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "friendship")
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Friendship {
     @Id

@@ -3,6 +3,8 @@ package com.jorupmotte.donotdrink.friend.service;
 import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
 import com.jorupmotte.donotdrink.common.type.FriendStatusType;
 import com.jorupmotte.donotdrink.friend.dto.request.FriendReqRequestDto;
+import com.jorupmotte.donotdrink.friend.dto.request.FriendReqResRequestDto;
+import com.jorupmotte.donotdrink.friend.dto.response.FriendReqRestResponseDto;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqListResponseDto;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqResponseDto;
 import com.jorupmotte.donotdrink.friend.model.FriendRequest;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -26,6 +29,7 @@ public class FriendService implements IFriendService {
     private final FriendshipRepository friendshipRepository;
     private final UserService userService;
     private final UserRepository userRepository;
+    private final SseEmitterService sseEmitterService;
 
     @Override
     public Long getUserIdFromRequestId(Long requestId) {
@@ -90,6 +94,54 @@ public class FriendService implements IFriendService {
                 .build();
         friendRequestRepository.save(friendRequest);
 
+        // 알림 전송
+        sseEmitterService.sendFriendRequestNotification(receiver.getId(), userMe.getNickname());
+
         return FriendReqResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super FriendReqRestResponseDto> respondToFriendRequest(Long requestId, FriendReqResRequestDto requestDto) {
+        User userMe = userService.getUserFromSecurityContext();
+        if(userMe == null) {
+            return ResponseDto.authorizationFail();
+        }
+
+        Optional<FriendRequest> friendRequestOptional = friendRequestRepository.findById(requestId);
+        if(friendRequestOptional.isEmpty()){
+            return ResponseDto.databaseError();
+        }
+        FriendRequest friendRequest = friendRequestOptional.get();
+
+        if(!Objects.equals(friendRequest.getTo().getId(), userMe.getId())){
+            return ResponseDto.databaseError();
+        }
+        if(isFriend(userMe.getId(), friendRequest.getFrom().getId())){
+            return ResponseDto.databaseError();
+        }
+
+
+        FriendStatusType status = requestDto.getStatus();
+
+        // 친구 요청 상태 변경
+        friendRequestRepository.updateStatusById(requestId, status);
+
+        // 알림 전송
+        sseEmitterService.sendFriendRequestUpdate(userMe.getId(), friendRequest.getFrom().getNickname(), status);
+
+
+        if (status == FriendStatusType.ACCEPT) {
+            // 친구 등록
+            friendshipRepository.save(Friendship.builder()
+                    .user(userMe)
+                    .friend(friendRequest.getFrom())
+                    .build());
+            friendshipRepository.save(Friendship.builder()
+                    .user(friendRequest.getFrom())
+                    .friend(userMe)
+                    .build());
+        }
+
+        return FriendReqRestResponseDto.success();
     }
 }
