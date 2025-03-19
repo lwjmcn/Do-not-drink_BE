@@ -22,7 +22,6 @@ public interface ResponseCode {
   // budget
   String BUDGET_UNDEFINED = "BU";
   String BUDGET_ALREADY_DEFINED = "BAD";
-  String TOO_MANY_REQUESTS = "TMR";
 
   // friend
   String USER_NOT_FOUND = "UNF";

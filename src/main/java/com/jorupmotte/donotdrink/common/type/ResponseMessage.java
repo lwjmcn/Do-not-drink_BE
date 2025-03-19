@@ -22,7 +22,6 @@ public interface ResponseMessage {
   // budget
   String BUDGET_UNDEFINED = "Budget is not defined";
   String BUDGET_ALREADY_DEFINED = "Budget is already defined";
-  String TOO_MANY_REQUESTS = "Too many requests";
 
   // friend
   String USER_NOT_FOUND = "User not found";
