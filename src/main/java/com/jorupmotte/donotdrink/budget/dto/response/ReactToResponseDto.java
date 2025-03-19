@@ -21,9 +21,4 @@ public class ReactToResponseDto extends ResponseDto {
         ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_FRIEND, ResponseMessage.NOT_FRIEND);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
-
-    public static ResponseEntity<ResponseDto> tooManyRequests(){
-        ResponseDto responseBody = new ResponseDto(ResponseCode.TOO_MANY_REQUESTS, ResponseMessage.TOO_MANY_REQUESTS);
-        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(responseBody);
-    }
 }
