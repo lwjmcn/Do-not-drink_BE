@@ -1,13 +1,12 @@
 package com.jorupmotte.donotdrink.friend.controller;
 
 import com.jorupmotte.donotdrink.budget.service.SseEmitterService;
+import com.jorupmotte.donotdrink.friend.dto.response.FriendReqListResponseDto;
 import com.jorupmotte.donotdrink.friend.service.FriendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
@@ -18,6 +17,11 @@ public class FriendRequestController {
     private final SseEmitterService sseEmitterService;
     private final FriendService friendService;
 
+    @GetMapping(value = "/received")
+    public ResponseEntity<? super FriendReqListResponseDto> getReceivedFriendRequests() {
+        return friendService.getReceivedFriendRequests();
+    }
+
     @PatchMapping(value = "/{requestId}/accept", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter acceptFriendRequest(@PathVariable Long requestId) {
         Long userId = friendService.getUserIdFromRequestId(requestId);
@@ -27,4 +31,5 @@ public class FriendRequestController {
 
         return sseEmitterService.reactionSubscribe(userId);
     }
+
 }
