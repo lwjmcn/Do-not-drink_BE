@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
     @Transactional
-    @Query("SELECT SUM(t.amount) FROM Transaction t WHERE t.user.id = ?1 AND t.date >= ?2 AND t.date <= ?3")
+    @Query("SELECT IFNULL(SUM(t.amount),0) FROM Transaction t WHERE t.user.id = ?1 AND t.date >= ?2 AND t.date <= ?3")
     Long sumAllByUser_IdAndDateGreaterThanEqualAndDateLessThanEqual(Long userId, LocalDateTime startDate, LocalDateTime endDate);
 
 }
