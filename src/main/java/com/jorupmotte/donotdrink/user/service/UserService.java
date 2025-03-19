@@ -1,6 +1,7 @@
 package com.jorupmotte.donotdrink.user.service;
 
 import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
+import com.jorupmotte.donotdrink.friend.service.FriendService;
 import com.jorupmotte.donotdrink.user.dto.response.UserFriendResponseDto;
 import com.jorupmotte.donotdrink.user.dto.response.UserMeResponseDto;
 import com.jorupmotte.donotdrink.user.model.User;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService implements IUserService{
     private final UserRepository userRepository;
+    private final FriendService friendService;
 
     public User getUserFromSecurityContext(){
         User user = null;
@@ -68,10 +70,9 @@ public class UserService implements IUserService{
         }
         User friend = userOptional.get();
 
-//        // TODO: 친구인지 확인하는 로직 추가
-//        if(!friend){
-//            return UserFriendResponseDto.notFriend();
-//        }
+        if(!friendService.isFriend(userMe.getId(), friend.getId())){
+            return UserFriendResponseDto.notFriend();
+        }
 
         return UserFriendResponseDto.success(friend);
 
