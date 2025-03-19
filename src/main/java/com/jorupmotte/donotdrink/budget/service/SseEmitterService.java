@@ -14,26 +14,42 @@ import java.util.stream.Collectors;
 public class SseEmitterService {
     private final Map<Long, SseEmitter> reactionEmitters = new ConcurrentHashMap<>();
 
-    public SseEmitter reactionSubscribe(Long userId) {
+    public SseEmitter reactionSubscribe(Long receiverId) {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
-        reactionEmitters.put(userId, emitter);
+        reactionEmitters.put(receiverId, emitter);
 
-        emitter.onCompletion(() -> reactionEmitters.remove(userId));
-        emitter.onTimeout(() -> reactionEmitters.remove(userId));
+        emitter.onCompletion(() -> reactionEmitters.remove(receiverId));
+        emitter.onTimeout(() -> reactionEmitters.remove(receiverId));
+        emitter.onError((e) -> {
+            sendError(receiverId, e.getMessage());
+            reactionEmitters.remove(receiverId);
+        });
 
         return emitter;
     }
 
-    public void sendReactionUpdate(Long userId, Map<ReactionType, AtomicInteger> reactionMap) {
-        SseEmitter emitter = reactionEmitters.get(userId);
+    public void sendReactionUpdate(Long receiverId, Map<ReactionType, AtomicInteger> reactionMap) {
+        SseEmitter emitter = reactionEmitters.get(receiverId);
         if (emitter != null) {
             try {
                 // Atomic Integer -> Integer로 변환해서 전송
                 emitter.send(SseEmitter.event().data(reactionMap.entrySet().stream().collect(Collectors.toMap(
                         Map.Entry::getKey, e->e.getValue().get()))));
             } catch (IOException e) {
-                reactionEmitters.remove(userId);
+                reactionEmitters.remove(receiverId);
             }
+        }
+    }
+
+    public void sendError(Long receiverid, String errorMessage) {
+        SseEmitter emitter = reactionEmitters.get(receiverid);
+        if (emitter == null) {
+            return;
+        }
+        try {
+            emitter.send("error:" + errorMessage);
+        } catch (IOException e) {
+            reactionEmitters.remove(receiverid);
         }
     }
 }
