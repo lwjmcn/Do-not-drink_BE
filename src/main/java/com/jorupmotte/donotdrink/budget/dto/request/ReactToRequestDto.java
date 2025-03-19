@@ -13,4 +13,7 @@ import lombok.Setter;
 public class ReactToRequestDto {
     @NotNull
     private ReactionType reactionType;
+
+    @NotNull
+    private int count;
 }

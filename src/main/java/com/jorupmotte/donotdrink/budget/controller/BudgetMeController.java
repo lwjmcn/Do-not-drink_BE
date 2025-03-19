@@ -30,8 +30,8 @@ public class BudgetMeController {
         return budgetService.setBudget(requestBody);
     }
 
-    @GetMapping("/current/reactions")
+    @GetMapping(value = "/current/reactions")
     public ResponseEntity<? super ReactionCurrentResponseDto> getMyCurrentReactions() {
-        return reactionService.getMyCurrentReactions();
+        return reactionService.getMyCurrentReactionsFromDb();
     }
 }
