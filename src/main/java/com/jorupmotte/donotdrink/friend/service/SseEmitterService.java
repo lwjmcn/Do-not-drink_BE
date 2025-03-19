@@ -1,4 +1,4 @@
-package com.jorupmotte.donotdrink.budget.service;
+package com.jorupmotte.donotdrink.friend.service;
 
 import com.jorupmotte.donotdrink.common.type.ReactionType;
 import org.springframework.stereotype.Service;

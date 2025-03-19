@@ -1,6 +1,6 @@
 package com.jorupmotte.donotdrink.friend.controller;
 
-import com.jorupmotte.donotdrink.budget.service.SseEmitterService;
+import com.jorupmotte.donotdrink.friend.service.SseEmitterService;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqListResponseDto;
 import com.jorupmotte.donotdrink.friend.service.FriendService;
 import lombok.RequiredArgsConstructor;

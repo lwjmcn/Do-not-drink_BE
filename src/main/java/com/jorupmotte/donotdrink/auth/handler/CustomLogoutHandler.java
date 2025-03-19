@@ -1,6 +1,6 @@
 package com.jorupmotte.donotdrink.auth.handler;
 
-import com.jorupmotte.donotdrink.auth.config.CacheConfig;
+import com.jorupmotte.donotdrink.common.config.CacheConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

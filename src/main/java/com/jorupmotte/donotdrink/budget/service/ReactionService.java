@@ -1,6 +1,6 @@
 package com.jorupmotte.donotdrink.budget.service;
 
-import com.jorupmotte.donotdrink.auth.config.CacheConfig;
+import com.jorupmotte.donotdrink.common.config.CacheConfig;
 import com.jorupmotte.donotdrink.budget.dto.request.ReactToRequestDto;
 import com.jorupmotte.donotdrink.budget.dto.response.ReactToResponseDto;
 import com.jorupmotte.donotdrink.budget.dto.response.ReactionCurrentResponseDto;
@@ -10,6 +10,7 @@ import com.jorupmotte.donotdrink.budget.repository.ReactionRepository;
 import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
 import com.jorupmotte.donotdrink.common.type.ReactionType;
 import com.jorupmotte.donotdrink.friend.service.FriendService;
+import com.jorupmotte.donotdrink.friend.service.SseEmitterService;
 import com.jorupmotte.donotdrink.user.model.User;
 import com.jorupmotte.donotdrink.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
