@@ -11,13 +11,13 @@ import java.util.List;
 
 @Getter
 public class FriendReqListResponseDto extends ResponseDto {
-    private final FriendReqDto[] friendRequests;
+    private final List<FriendReqDto> friendRequests;
 
     public FriendReqListResponseDto(List<FriendRequest> friendRequests) {
         super();
         this.friendRequests = friendRequests.stream()
                 .map(FriendReqDto::from)
-                .toArray(FriendReqDto[]::new);
+                .toList();
     }
 
     public static ResponseEntity<FriendReqListResponseDto> success(List<FriendRequest> friendRequests) {

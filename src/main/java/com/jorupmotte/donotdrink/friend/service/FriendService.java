@@ -1,5 +1,6 @@
 package com.jorupmotte.donotdrink.friend.service;
 
+import com.jorupmotte.donotdrink.budget.service.BudgetService;
 import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
 import com.jorupmotte.donotdrink.common.type.FriendStatusType;
 import com.jorupmotte.donotdrink.friend.dto.request.FriendReqRequestDto;
@@ -7,6 +8,7 @@ import com.jorupmotte.donotdrink.friend.dto.request.FriendReqResRequestDto;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqRestResponseDto;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqListResponseDto;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqResponseDto;
+import com.jorupmotte.donotdrink.friend.dto.response.FriendshipListResponseDto;
 import com.jorupmotte.donotdrink.friend.model.FriendRequest;
 import com.jorupmotte.donotdrink.friend.model.Friendship;
 import com.jorupmotte.donotdrink.friend.repository.FriendRequestRepository;
@@ -30,6 +32,7 @@ public class FriendService implements IFriendService {
     private final UserService userService;
     private final UserRepository userRepository;
     private final SseEmitterService sseEmitterService;
+    private final BudgetService budgetService;
 
     @Override
     public Long getUserIdFromRequestId(Long requestId) {
@@ -143,5 +146,23 @@ public class FriendService implements IFriendService {
         }
 
         return FriendReqRestResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super FriendshipListResponseDto> getFriends() {
+        User userMe = userService.getUserFromSecurityContext();
+        if(userMe == null) {
+            return ResponseDto.authorizationFail();
+        }
+
+        List<Friendship> friendships = friendshipRepository.findAllByUser_Id(userMe.getId());
+        List<FriendshipListResponseDto.FriendDto> friends = friendships.stream()
+                .map(friendship ->
+                        FriendshipListResponseDto.FriendDto.from(
+                                friendship,
+                                budgetService.getRemainingRate(friendship.getFriend().getId())))
+                .toList();
+
+        return FriendshipListResponseDto.success(friends);
     }
 }

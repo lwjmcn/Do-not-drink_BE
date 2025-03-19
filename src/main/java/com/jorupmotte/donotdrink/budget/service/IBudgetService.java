@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface IBudgetService {
     Optional<Budget> getCurrentBudget(Long userId);
+    float getRemainingRate(Long userId);
     ResponseEntity<? super BudgetRemainingResponseDto> getRemainingBudget();
     ResponseEntity<? super BudgetSetResponseDto> setBudget(BudgetSetRequestDto requestDto);
 }

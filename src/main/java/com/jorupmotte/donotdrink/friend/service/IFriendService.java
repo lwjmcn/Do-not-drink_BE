@@ -5,6 +5,7 @@ import com.jorupmotte.donotdrink.friend.dto.request.FriendReqResRequestDto;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqRestResponseDto;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqListResponseDto;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqResponseDto;
+import com.jorupmotte.donotdrink.friend.dto.response.FriendshipListResponseDto;
 import org.springframework.http.ResponseEntity;
 
 public interface IFriendService {
@@ -14,4 +15,5 @@ public interface IFriendService {
     public ResponseEntity<? super FriendReqListResponseDto> getReceivedFriendRequests();
     public ResponseEntity<? super FriendReqResponseDto> requestFriend(FriendReqRequestDto requestDto);
     public ResponseEntity<? super FriendReqRestResponseDto> respondToFriendRequest(Long requestId, FriendReqResRequestDto requestDto);
+    public ResponseEntity<? super FriendshipListResponseDto> getFriends();
 }

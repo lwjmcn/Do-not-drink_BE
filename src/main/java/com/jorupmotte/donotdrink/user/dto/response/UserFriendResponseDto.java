@@ -26,14 +26,13 @@ public class UserFriendResponseDto extends ResponseDto {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
     }
 
-    private record UserFriendDto(String nickname, String accountId, String fileUrl, int usageRate, int likes, int dislikes) {
+    private record UserFriendDto(String nickname, String accountId, String fileUrl, float remainingRate) {
         public static UserFriendDto from(User user) {
-            // TODO: usageRate, likes, dislikes
             return new UserFriendDto(
                     user.getNickname(),
                     user.getAccountId(),
                     user.getTheme().getFileUrl(),
-                    0,0,0 // TODO: usageRate, likes, dislikes
+                    0 // TODO: remainingRate // 이 API 사용 안 할 것 같음
             );
         }
     }

@@ -30,6 +30,25 @@ public class BudgetService implements IBudgetService {
     }
 
     @Override
+    public float getRemainingRate(Long userId) {
+        // 현재 budget 조회
+        Optional<Budget> budgetOptional = getCurrentBudget(userId);
+        if(budgetOptional.isEmpty()){
+            return 0;
+        }
+        Long budget = budgetOptional.get().getAmount();
+
+        LocalDateTime startDate = budgetOptional.get().getStartDate();
+        LocalDateTime endDate = budgetOptional.get().getEndDate();
+
+        // 현재 사용량 조회
+        Long used = transactionRepository.sumAllByUser_IdAndDateGreaterThanEqualAndDateLessThanEqual(userId, startDate, endDate);
+
+        // 남은 비율
+        return (float) (budget - used) / budget * 100;
+    }
+
+    @Override
     public ResponseEntity<? super BudgetRemainingResponseDto> getRemainingBudget() {
         User userMe = userService.getUserFromSecurityContext();
         if(userMe == null) {
