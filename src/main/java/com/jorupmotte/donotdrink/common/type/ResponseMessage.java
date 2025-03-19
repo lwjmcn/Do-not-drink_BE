@@ -26,7 +26,8 @@ public interface ResponseMessage {
   // friend
   String USER_NOT_FOUND = "User not found";
   String ALREADY_FRIEND = "Already a friend";
-    String ALREADY_REQUESTED = "Already requested";
+  String ALREADY_REQUESTED = "Already requested";
+  String SELF_REQUEST = "Can't request to yourself";
 
   // ocr
   String OCR_FAIL = "OCR failed";

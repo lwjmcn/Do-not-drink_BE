@@ -32,4 +32,9 @@ public class FriendReqResponseDto extends ResponseDto {
         ResponseDto responseBody = new ResponseDto(ResponseCode.ALREADY_REQUESTED, ResponseMessage.ALREADY_REQUESTED);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
+
+    public static ResponseEntity<ResponseDto> selfRequest() {
+        ResponseDto responseBody = new ResponseDto(ResponseCode.SELF_REQUEST, ResponseMessage.SELF_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
 }

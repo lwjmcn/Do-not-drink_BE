@@ -83,6 +83,10 @@ public class FriendService implements IFriendService {
         }
         User receiver = receiverOptional.get();
 
+        if(Objects.equals(userMe.getId(), receiver.getId())){
+            return FriendReqResponseDto.selfRequest();
+        }
+
         if(isFriend(userMe.getId(), receiver.getId())){
             return FriendReqResponseDto.alreadyFriend();
         }

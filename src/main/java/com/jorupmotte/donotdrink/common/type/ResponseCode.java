@@ -27,6 +27,7 @@ public interface ResponseCode {
   String USER_NOT_FOUND = "UNF";
   String ALREADY_FRIEND = "AF";
   String ALREADY_REQUESTED = "AR";
+  String SELF_REQUEST = "SR";
 
   // ocr
   String OCR_FAIL = "OF";
