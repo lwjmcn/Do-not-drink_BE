@@ -1,8 +1,10 @@
 package com.jorupmotte.donotdrink.friend.controller;
 
+import com.jorupmotte.donotdrink.friend.dto.request.FriendReqRequestDto;
 import com.jorupmotte.donotdrink.friend.service.SseEmitterService;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqListResponseDto;
 import com.jorupmotte.donotdrink.friend.service.FriendService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +24,18 @@ public class FriendRequestController {
         return friendService.getReceivedFriendRequests();
     }
 
+    @PostMapping(value = "/")
+    public ResponseEntity<?> requestFriend(
+            @RequestBody @Valid FriendReqRequestDto requestBody
+    ) {
+        return friendService.requestFriend(requestBody);
+    }
+
     @PatchMapping(value = "/{requestId}/accept", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter acceptFriendRequest(@PathVariable Long requestId) {
         Long userId = friendService.getUserIdFromRequestId(requestId);
         if(userId == null) {
-            sseEmitterService.sendError(userId, "Invalid request id");
+            sseEmitterService.sendReactionError(userId, "Invalid request id");
         }
 
         return sseEmitterService.reactionSubscribe(userId);

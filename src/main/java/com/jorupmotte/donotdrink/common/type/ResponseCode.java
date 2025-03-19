@@ -26,6 +26,7 @@ public interface ResponseCode {
   // friend
   String USER_NOT_FOUND = "UNF";
   String ALREADY_FRIEND = "AF";
+  String ALREADY_REQUESTED = "AR";
 
   // ocr
   String OCR_FAIL = "OF";

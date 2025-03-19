@@ -4,12 +4,16 @@ import com.jorupmotte.donotdrink.user.model.User;
 import com.jorupmotte.donotdrink.common.type.FriendStatusType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "friend_request")
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class FriendRequest {
     @Id
