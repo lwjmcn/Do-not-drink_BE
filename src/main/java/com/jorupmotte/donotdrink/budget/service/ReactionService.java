@@ -9,6 +9,7 @@ import com.jorupmotte.donotdrink.budget.model.Reaction;
 import com.jorupmotte.donotdrink.budget.repository.ReactionRepository;
 import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
 import com.jorupmotte.donotdrink.common.type.ReactionType;
+import com.jorupmotte.donotdrink.friend.service.FriendService;
 import com.jorupmotte.donotdrink.user.model.User;
 import com.jorupmotte.donotdrink.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,7 @@ public class ReactionService implements IReactionService {
     private final ReactionRepository reactionRepository;
     private final CacheManager cacheManager;
     private final SseEmitterService sseEmitterService;
+    private final FriendService friendService;
 
     @Override
     public ResponseEntity<? super ReactionCurrentResponseDto> getMyCurrentReactionsFromDb() {
@@ -62,9 +64,9 @@ public class ReactionService implements IReactionService {
             return ResponseDto.authorizationFail();
         }
         
-        // TODO 친구인지 체크
-
-        
+        if(!friendService.isFriend(userMe.getId(), receiverId)){
+            return ReactToResponseDto.notFriend();
+        }
 
         // cache에 업데이트
         CaffeineCache reactionCache = (CaffeineCache) cacheManager.getCache(CacheConfig.REACTION);
