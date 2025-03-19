@@ -23,6 +23,7 @@ public class BudgetService implements IBudgetService {
     private final BudgetRepository budgetRepository;
     private final TransactionRepository transactionRepository;
 
+    @Override
     public Optional<Budget> getCurrentBudget(Long userId) {
         LocalDateTime now = LocalDateTime.now();
         return budgetRepository.findByUser_IdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(userId, now, now);
