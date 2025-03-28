@@ -139,6 +139,7 @@ public class AuthService implements IAuthService{
                     .loginType(LoginType.LOCAL)
                     .role(RoleType.ROLE_USER)
                     .theme(theme.get())
+                    .isDeleted(false)
                     .build();
             userRepository.save(user);
 
@@ -218,6 +219,7 @@ public class AuthService implements IAuthService{
                     .loginType(LoginType.SOCIAL)
                     .role(RoleType.ROLE_USER)
                     .theme(theme.get())
+                    .isDeleted(false)
                     .build();
 
             // create social login
