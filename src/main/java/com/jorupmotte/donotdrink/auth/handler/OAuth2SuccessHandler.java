@@ -44,14 +44,11 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             response.sendRedirect(frontUrl+"/auth/oauth/signin/"+token+"/3600");
         } else {
             // sign up
-            HttpSession session = request.getSession();
-            session.setAttribute("tokenId", tokenId); // should be removed after sign up
-
             String nickname = customOAuth2User.getNickname();
             String encodedNickname = URLEncoder.encode(nickname, StandardCharsets.UTF_8);
             String accountId = customOAuth2User.getAccountId();
 
-            getRedirectStrategy().sendRedirect(request,response,frontUrl+"/auth/oauth/signup/profile"+"?nickname="+encodedNickname+"&accountId="+accountId);
+            getRedirectStrategy().sendRedirect(request,response,frontUrl+"/auth/oauth/signup/profile"+"?nickname="+encodedNickname+"&accountId="+accountId+"&tokenId="+tokenId);
         }
     }
 }

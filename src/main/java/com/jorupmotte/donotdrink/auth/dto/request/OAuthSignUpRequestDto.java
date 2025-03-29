@@ -24,4 +24,7 @@ public class OAuthSignUpRequestDto {
 
     @NotNull
     private Long themeId;
+
+    @NotNull
+    private String tokenId;
 }

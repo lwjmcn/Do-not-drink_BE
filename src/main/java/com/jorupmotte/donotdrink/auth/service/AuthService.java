@@ -191,11 +191,8 @@ public class AuthService implements IAuthService{
     }
 
     @Override
-    public ResponseEntity<? super OAuthSignUpResponseDto> oAuthSignUp(HttpSession session, OAuthSignUpRequestDto requestDto) {
-        if(session == null || session.getAttribute("tokenId") == null)
-            return OAuthSignUpResponseDto.noSessionInfo();
-
-        String tokenId = session.getAttribute("tokenId").toString();
+    public ResponseEntity<? super OAuthSignUpResponseDto> oAuthSignUp(OAuthSignUpRequestDto requestDto) {
+        String tokenId = requestDto.getTokenId();
         String token = null;
 
         try {
@@ -231,8 +228,6 @@ public class AuthService implements IAuthService{
 
             userRepository.save(user);
             socialLoginRepository.save(socialLogin);
-
-            session.removeAttribute("tokenId");
 
             // jwt 발급
             token = jwtProvider.createJwt(accountId);

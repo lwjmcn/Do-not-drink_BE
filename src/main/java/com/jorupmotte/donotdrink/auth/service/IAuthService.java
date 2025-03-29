@@ -11,5 +11,5 @@ public interface IAuthService {
  ResponseEntity<? super CheckVerificationResponseDto> checkVerification(CheckVerificationRequestDto requestDto);
  ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto requestDto);
  ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto requestDto);
- ResponseEntity<? super OAuthSignUpResponseDto> oAuthSignUp(HttpSession session, OAuthSignUpRequestDto requestDto);
+ ResponseEntity<? super OAuthSignUpResponseDto> oAuthSignUp(OAuthSignUpRequestDto requestDto);
 }
