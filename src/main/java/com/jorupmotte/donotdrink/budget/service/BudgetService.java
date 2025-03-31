@@ -5,7 +5,7 @@ import com.jorupmotte.donotdrink.budget.dto.response.BudgetRemainingResponseDto;
 import com.jorupmotte.donotdrink.budget.dto.response.BudgetSetResponseDto;
 import com.jorupmotte.donotdrink.budget.model.Budget;
 import com.jorupmotte.donotdrink.budget.repository.BudgetRepository;
-import com.jorupmotte.donotdrink.budget.repository.TransactionRepository;
+import com.jorupmotte.donotdrink.expense.repository.TransactionRepository;
 import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
 import com.jorupmotte.donotdrink.user.model.User;
 import com.jorupmotte.donotdrink.user.service.UserService;

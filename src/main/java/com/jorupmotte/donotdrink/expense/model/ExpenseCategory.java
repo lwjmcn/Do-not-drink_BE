@@ -1,4 +1,4 @@
-package com.jorupmotte.donotdrink.budget.model;
+package com.jorupmotte.donotdrink.expense.model;
 
 import com.jorupmotte.donotdrink.user.model.User;
 import jakarta.persistence.*;

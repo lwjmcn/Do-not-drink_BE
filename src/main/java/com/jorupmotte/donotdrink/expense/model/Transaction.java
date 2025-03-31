@@ -1,8 +1,10 @@
-package com.jorupmotte.donotdrink.budget.model;
+package com.jorupmotte.donotdrink.expense.model;
 
 import com.jorupmotte.donotdrink.user.model.User;
 import com.jorupmotte.donotdrink.common.type.ExpenseType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +13,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "transaction", schema = "do-not-drink")
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Transaction {
     @Id
