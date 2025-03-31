@@ -6,13 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
-public class FriendReqRestResponseDto extends ResponseDto {
-    public FriendReqRestResponseDto() {
+public class FriendReqResResponseDto extends ResponseDto {
+    public FriendReqResResponseDto() {
         super();
     }
 
-    public static ResponseEntity<FriendReqRestResponseDto> success() {
-        FriendReqRestResponseDto responseBody = new FriendReqRestResponseDto();
+    public static ResponseEntity<FriendReqResResponseDto> success() {
+        FriendReqResResponseDto responseBody = new FriendReqResResponseDto();
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 }

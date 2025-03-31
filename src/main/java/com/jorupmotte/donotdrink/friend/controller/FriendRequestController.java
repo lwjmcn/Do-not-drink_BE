@@ -2,7 +2,8 @@ package com.jorupmotte.donotdrink.friend.controller;
 
 import com.jorupmotte.donotdrink.friend.dto.request.FriendReqRequestDto;
 import com.jorupmotte.donotdrink.friend.dto.request.FriendReqResRequestDto;
-import com.jorupmotte.donotdrink.friend.dto.response.FriendReqRestResponseDto;
+import com.jorupmotte.donotdrink.friend.dto.response.FriendReqResponseDto;
+import com.jorupmotte.donotdrink.friend.dto.response.FriendReqResResponseDto;
 import com.jorupmotte.donotdrink.friend.service.SseEmitterService;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqListResponseDto;
 import com.jorupmotte.donotdrink.friend.service.FriendService;
@@ -29,7 +30,7 @@ public class FriendRequestController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> requestFriend(
+    public ResponseEntity<? super FriendReqResponseDto> requestFriend(
             @RequestBody @Valid FriendReqRequestDto requestBody
     ) {
         return friendService.requestFriend(requestBody);
@@ -45,7 +46,7 @@ public class FriendRequestController {
     }
 
     @PatchMapping(value = "/{requestId}")
-    public ResponseEntity<? super FriendReqRestResponseDto> respondToFriendRequest(
+    public ResponseEntity<? super FriendReqResResponseDto> respondToFriendRequest(
             @PathVariable Long requestId,
             @RequestBody @Valid FriendReqResRequestDto requestBody
     ) {

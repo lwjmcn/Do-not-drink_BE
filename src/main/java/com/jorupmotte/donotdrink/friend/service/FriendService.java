@@ -5,7 +5,7 @@ import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
 import com.jorupmotte.donotdrink.common.type.FriendStatusType;
 import com.jorupmotte.donotdrink.friend.dto.request.FriendReqRequestDto;
 import com.jorupmotte.donotdrink.friend.dto.request.FriendReqResRequestDto;
-import com.jorupmotte.donotdrink.friend.dto.response.FriendReqRestResponseDto;
+import com.jorupmotte.donotdrink.friend.dto.response.FriendReqResResponseDto;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqListResponseDto;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendReqResponseDto;
 import com.jorupmotte.donotdrink.friend.dto.response.FriendshipListResponseDto;
@@ -108,7 +108,7 @@ public class FriendService implements IFriendService {
     }
 
     @Override
-    public ResponseEntity<? super FriendReqRestResponseDto> respondToFriendRequest(Long requestId, FriendReqResRequestDto requestDto) {
+    public ResponseEntity<? super FriendReqResResponseDto> respondToFriendRequest(Long requestId, FriendReqResRequestDto requestDto) {
         User userMe = userService.getUserFromSecurityContext();
         if(userMe == null) {
             return ResponseDto.authorizationFail();
@@ -149,7 +149,7 @@ public class FriendService implements IFriendService {
                     .build());
         }
 
-        return FriendReqRestResponseDto.success();
+        return FriendReqResResponseDto.success();
     }
 
     @Override
