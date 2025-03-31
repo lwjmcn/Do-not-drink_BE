@@ -4,6 +4,7 @@ import com.jorupmotte.donotdrink.common.dto.response.ResponseDto;
 import com.jorupmotte.donotdrink.user.dto.response.UserMeResponseDto;
 import com.jorupmotte.donotdrink.user.model.User;
 import com.jorupmotte.donotdrink.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -42,6 +43,7 @@ public class UserService implements IUserService{
         return user;
     }
 
+    @Transactional
     @Override
     public ResponseEntity<? super UserMeResponseDto> getCurrentUser() {
         User userMe = getUserFromSecurityContext();
