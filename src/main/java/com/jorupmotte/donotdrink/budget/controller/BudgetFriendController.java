@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/users/{friendId}/budgets/current/reactions")
+@RequestMapping("api/v1/users/{friendId}/budgets")
 public class BudgetFriendController {
     private final UserService userService;
     private final ReactionService reactionService;
