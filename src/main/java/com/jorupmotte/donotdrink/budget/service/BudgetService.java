@@ -62,11 +62,16 @@ public class BudgetService implements IBudgetService {
             return BudgetRemainingResponseDto.noBudget();
         }
         Long budget = budgetOptional.get().getAmount();
+
+        System.out.println("budget " + budget);
+
         LocalDateTime startDate = budgetOptional.get().getStartDate();
         LocalDateTime endDate = budgetOptional.get().getEndDate();
 
         // 현재 사용량 조회
         Long used = transactionRepository.sumAllByUser_IdAndDateGreaterThanEqualAndDateLessThanEqual(userMe.getId(), startDate, endDate);
+
+        System.out.println("used " + used);
 
         // 남은 금액 계산
         Long remains = budget - used;
