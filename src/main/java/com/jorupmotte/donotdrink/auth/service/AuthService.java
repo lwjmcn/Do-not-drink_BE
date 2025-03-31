@@ -17,6 +17,7 @@ import com.jorupmotte.donotdrink.common.type.LoginType;
 import com.jorupmotte.donotdrink.common.type.SocialLoginType;
 import com.jorupmotte.donotdrink.user.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -161,6 +162,7 @@ public class AuthService implements IAuthService{
         return SignUpResponseDto.success();
     }
 
+    @Transactional
     @Override
     public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto requestDto) {
         String token = null;
@@ -190,6 +192,7 @@ public class AuthService implements IAuthService{
         return SignInResponseDto.success(token);
     }
 
+    @Transactional
     @Override
     public ResponseEntity<? super OAuthSignUpResponseDto> oAuthSignUp(OAuthSignUpRequestDto requestDto) {
         String tokenId = requestDto.getTokenId();
