@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.Optional;
 
 @Service
@@ -87,14 +88,14 @@ public class BudgetService implements IBudgetService {
         }
 
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime lastDayOfThisMonth = now.withDayOfMonth(now.toLocalDate().lengthOfMonth());
-        System.out.println("lastDayOfThisMonth = " + lastDayOfThisMonth);
+        LocalDateTime lastMomentOfThisMonth = YearMonth.of(now.getYear(), now.getMonth()).atEndOfMonth().atTime(23, 59, 59);
+        System.out.println("lastMomentOfThisMonth = " + lastMomentOfThisMonth);
 
         Budget budget = Budget.builder()
                 .user(userMe)
                 .amount(requestDto.getBudget())
                 .startDate(now)
-                .endDate(lastDayOfThisMonth)
+                .endDate(lastMomentOfThisMonth)
                 .build();
         budgetRepository.save(budget);
 
