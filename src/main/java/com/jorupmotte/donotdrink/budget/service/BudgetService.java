@@ -12,6 +12,7 @@ import com.jorupmotte.donotdrink.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class BudgetService implements IBudgetService {
     private final UserService userService;
     private final BudgetRepository budgetRepository;
@@ -79,6 +81,7 @@ public class BudgetService implements IBudgetService {
         return BudgetRemainingResponseDto.success(remains);
     }
 
+    @Transactional
     @Override
     public ResponseEntity<? super BudgetSetResponseDto> setBudget(BudgetSetRequestDto requestDto) {
         User userMe = userService.getUserFromSecurityContext();
