@@ -3,7 +3,9 @@ package com.jorupmotte.donotdrink.friend.service;
 import com.jorupmotte.donotdrink.common.type.FriendStatusType;
 import com.jorupmotte.donotdrink.common.type.ReactionType;
 import com.jorupmotte.donotdrink.friend.model.FriendRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
@@ -13,6 +15,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class SseEmitterService {
     // userId마다 SseEmitter
     private final Map<Long, SseEmitter> reactionEmitters = new ConcurrentHashMap<>();

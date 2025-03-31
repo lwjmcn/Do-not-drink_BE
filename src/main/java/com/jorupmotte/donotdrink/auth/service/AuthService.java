@@ -16,19 +16,19 @@ import com.jorupmotte.donotdrink.theme.repository.ThemeRepository;
 import com.jorupmotte.donotdrink.common.type.LoginType;
 import com.jorupmotte.donotdrink.common.type.SocialLoginType;
 import com.jorupmotte.donotdrink.user.repository.UserRepository;
-import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AuthService implements IAuthService{
     private final UserRepository userRepository;
     private final LocalLoginRepository localLoginRepository;
@@ -55,6 +55,7 @@ public class AuthService implements IAuthService{
         return AccountIdCheckResponseDto.success();
     }
 
+    @Transactional
     @Override
     public ResponseEntity<? super EmailVerificationResponseDto> emailVerification(EmailVerificationRequestDto requestDto) {
         try {
@@ -115,6 +116,7 @@ public class AuthService implements IAuthService{
         return CheckVerificationResponseDto.success();
     }
 
+    @Transactional
     @Override
     public ResponseEntity<? super SignUpResponseDto> signUp(SignUpRequestDto requestDto) {
         try {

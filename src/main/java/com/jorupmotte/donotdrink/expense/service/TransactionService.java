@@ -16,18 +16,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TransactionService implements ITransactionService{
 
     private final UserService userService;
     private final TransactionRepository transactionRepository;
     private final ExpenseCategoryRepository expenseCategoryRepository;
 
+    @Transactional
     @Override
     public ResponseEntity<? super TransactionAddResponseDto> addTransaction(TransactionAddRequestDto requestDto) {
         User userMe = userService.getUserFromSecurityContext();

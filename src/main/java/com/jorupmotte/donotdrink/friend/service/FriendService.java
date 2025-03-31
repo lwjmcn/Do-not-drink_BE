@@ -19,6 +19,7 @@ import com.jorupmotte.donotdrink.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,6 +27,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class FriendService implements IFriendService {
     private final FriendRequestRepository friendRequestRepository;
     private final FriendshipRepository friendshipRepository;
@@ -68,6 +70,7 @@ public class FriendService implements IFriendService {
         return FriendReqListResponseDto.success(friendRequestList);
     }
 
+    @Transactional
     @Override
     public ResponseEntity<? super FriendReqResponseDto> requestFriend(FriendReqRequestDto requestDto) {
         // 본인 정보
@@ -107,6 +110,7 @@ public class FriendService implements IFriendService {
         return FriendReqResponseDto.success();
     }
 
+    @Transactional
     @Override
     public ResponseEntity<? super FriendReqResResponseDto> respondToFriendRequest(Long requestId, FriendReqResRequestDto requestDto) {
         User userMe = userService.getUserFromSecurityContext();

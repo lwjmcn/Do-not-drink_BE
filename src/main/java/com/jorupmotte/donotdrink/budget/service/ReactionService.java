@@ -21,6 +21,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.jorupmotte.donotdrink.user.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ReactionService implements IReactionService {
     private final UserService userService;
     private final BudgetService budgetService;
@@ -58,6 +60,7 @@ public class ReactionService implements IReactionService {
         return ReactionCurrentResponseDto.success(reactionList);
     }
 
+    @Transactional
     @Override
     public ResponseEntity<? super ReactToResponseDto> reactTo(Long receiverId, ReactToRequestDto requestDto) {
         User userMe = userService.getUserFromSecurityContext();
@@ -86,6 +89,7 @@ public class ReactionService implements IReactionService {
         return ReactToResponseDto.success();
     }
 
+    @Transactional
     @Scheduled(fixedRate = 1000) // 1초마다 실행
     public void processReactionCache() {
         CaffeineCache reactionCache = (CaffeineCache) cacheManager.getCache(CacheConfig.REACTION);
