@@ -64,8 +64,13 @@ public class TransactionService implements ITransactionService{
             return ResponseDto.authorizationFail();
         }
 
+        Optional<ExpenseCategory> expenseCategoryOptional = expenseCategoryRepository.findExpenseCategoryById(categoryId);
+        if(expenseCategoryOptional.isEmpty()){
+            return ResponseDto.databaseError();
+        }
+
         Page<Transaction> pagedTransactions = transactionRepository.findAllByUser_IdAndCategory_Id(userMe.getId(), categoryId, pageable);
 
-        return TransactionListInCategoryResponseDto.success(pagedTransactions);
+        return TransactionListInCategoryResponseDto.success(expenseCategoryOptional.get().getName(), pagedTransactions);
     }
 }

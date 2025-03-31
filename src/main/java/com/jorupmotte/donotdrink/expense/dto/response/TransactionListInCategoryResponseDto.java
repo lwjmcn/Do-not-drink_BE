@@ -12,19 +12,21 @@ import java.util.List;
 
 @Getter
 public class TransactionListInCategoryResponseDto extends ResponseDto {
+    private final String categoryName;
     private final List<TransactionDto> transactions;
     private int totalPage;
     private Long totalElements;
 
-    public TransactionListInCategoryResponseDto(Page<Transaction> pagedTransactions) {
+    public TransactionListInCategoryResponseDto(String categoryName, Page<Transaction> pagedTransactions) {
         super();
+        this.categoryName = categoryName;
         this.transactions = pagedTransactions.getContent().stream().map(TransactionDto::from).toList();
         this.totalPage = pagedTransactions.getTotalPages();
         this.totalElements = pagedTransactions.getTotalElements();
     }
 
-    public static ResponseEntity<TransactionListInCategoryResponseDto> success(Page<Transaction> transactions) {
-        TransactionListInCategoryResponseDto responseBody = new TransactionListInCategoryResponseDto(transactions);
+    public static ResponseEntity<TransactionListInCategoryResponseDto> success(String categoryName, Page<Transaction> transactions) {
+        TransactionListInCategoryResponseDto responseBody = new TransactionListInCategoryResponseDto(categoryName, transactions);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
